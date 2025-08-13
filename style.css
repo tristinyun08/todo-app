@@ -34,6 +34,7 @@ h1 {
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 4px;
+  font-family: "EB Garamond", serif;
 }
 
 #add-button {
@@ -44,6 +45,7 @@ h1 {
   border-radius: 4px;
   cursor: pointer;
   margin-left: 10px;
+  font-family: "EB Garamond", serif;
 }
 
 #add-button:hover {
