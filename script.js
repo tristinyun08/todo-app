@@ -11,10 +11,36 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const renderTodos = () => {
     todoList.innerHTML = "";
-    todos.forEach((todo) => {
-      const listItem = document.createElement("li");
-      listItem.textContent = todo.text;
-      todoList.appendChild(listItem);
+    todos.forEach((todo, index) => {
+      const todoItem = document.createElement("li");
+      todoItem.className = `todo-item${todo.completed ? " completed" : ""}`;
+
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.checked = todo.completed;
+      checkbox.addEventListener("change", () => {
+        todos[index].completed = checkbox.checked;
+        saveTodos();
+        renderTodos();
+      });
+
+      const textSpan = document.createElement("span");
+      textSpan.className = "text";
+      textSpan.textContent = todo.text;
+
+      const deleteButton = document.createElement("button");
+      deleteButton.className = "delete-button";
+      deleteButton.textContent = "Delete";
+      deleteButton.addEventListener("click", () => {
+        todos.splice(index, 1);
+        saveTodos();
+        renderTodos();
+      });
+
+      todoItem.appendChild(checkbox);
+      todoItem.appendChild(textSpan);
+      todoItem.appendChild(deleteButton);
+      todoList.appendChild(todoItem);
     });
   };
 
