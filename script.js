@@ -3,21 +3,37 @@ document.addEventListener("DOMContentLoaded", () => {
   const addButton = document.getElementById("add-button");
   const todoList = document.getElementById("todo-list");
 
+  let todos = JSON.parse(localStorage.getItem("todos")) || [];
+
+  const saveTodos = () => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  };
+
+  const renderTodos = () => {
+    todoList.innerHTML = "";
+    todos.forEach((todo) => {
+      const listItem = document.createElement("li");
+      listItem.textContent = todo.text;
+      todoList.appendChild(listItem);
+    });
+  };
+
   const addTodo = () => {
     const todoText = todoInput.value.trim();
     if (todoText !== "") {
-      const listItem = document.createElement("li");
-      listItem.textContent = todoText;
-      todoList.appendChild(listItem);
+      todos.push({ text: todoText, completed: false });
+      saveTodos();
+      renderTodos();
       todoInput.value = "";
     }
   };
 
   addButton.addEventListener("click", addTodo);
-
   todoInput.addEventListener("keypress", (e) => {
     if (e.key === "Enter") {
       addTodo();
     }
   });
+
+  renderTodos();
 });
