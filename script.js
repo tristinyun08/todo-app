@@ -8,6 +8,11 @@ const saveTodos = () => {
   localStorage.setItem("todos", JSON.stringify(todos));
 };
 
+const saveAndRenderTodos = () => {
+  saveTodos();
+  renderTodos();
+}
+
 const renderTodos = () => {
   todoList.innerHTML = "";
   todos.forEach((todo, index) => {
@@ -19,8 +24,7 @@ const renderTodos = () => {
     checkbox.checked = todo.completed;
     checkbox.addEventListener("change", () => {
       todos[index].completed = checkbox.checked;
-      saveTodos();
-      renderTodos();
+      saveAndRenderTodos();
     });
 
     const textSpan = document.createElement("span");
@@ -32,8 +36,7 @@ const renderTodos = () => {
     deleteButton.textContent = "Delete";
     deleteButton.addEventListener("click", () => {
       todos.splice(index, 1);
-      saveTodos();
-      renderTodos();
+      saveAndRenderTodos();
     });
 
     todoItem.appendChild(checkbox);
@@ -47,8 +50,7 @@ const addTodo = () => {
   const todoText = todoInput.value.trim();
   if (todoText !== "") {
     todos.push({ text: todoText, completed: false });
-    saveTodos();
-    renderTodos();
+    saveAndRenderTodos();
     todoInput.value = "";
   }
 };
